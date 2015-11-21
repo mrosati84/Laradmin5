@@ -9,7 +9,7 @@
                 @foreach($fields as $field_name => $field_props)
                     <th>
                         <a href="?sort_by={{ $field_name }}">
-                            {{ $field_name }}
+                            {{ $field_props['label'] }}
                         </a>
                     </th>
                 @endforeach
