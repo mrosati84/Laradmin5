@@ -6,10 +6,10 @@
     <table class="table">
         <thead>
             <tr>
-                @foreach($fields as $field_name => $field_props)
+                @foreach($fields as $field_name => $field_properties)
                     <th>
                         <a href="?sort_by={{ $field_name }}">
-                            {{ $field_props['label'] }}
+                            {{ $field_properties['label'] }}
                         </a>
                     </th>
                 @endforeach
