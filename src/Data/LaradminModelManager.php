@@ -3,6 +3,7 @@
 namespace Laradmin\Data;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Request;
 
 /**
  * Class LaradminModelManager
@@ -45,7 +46,13 @@ class LaradminModelManager
     public function all()
     {
         $model = $this->getModel();
+        $rows = $model::all();
 
-        return $model::all();
+        if ($sort_by = Request::input('sort_by'))
+        {
+            return $rows->sortBy($sort_by);
+        }
+
+        return $rows;
     }
 }

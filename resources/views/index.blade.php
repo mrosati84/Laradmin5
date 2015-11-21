@@ -7,7 +7,11 @@
         <thead>
             <tr>
                 @foreach($fields as $field_name => $field_props)
-                    <th>{{ $field_name }}</th>
+                    <th>
+                        <a href="?sort_by={{ $field_name }}">
+                            {{ $field_name }}
+                        </a>
+                    </th>
                 @endforeach
                     <th>Actions</th>
             </tr>
