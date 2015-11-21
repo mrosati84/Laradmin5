@@ -4,6 +4,10 @@ namespace Laradmin\Widgets;
 
 use Laradmin\Widgets\WidgetInterface;
 
+/**
+ * Class EmailWidget
+ * @package Laradmin\Widgets
+ */
 class EmailWidget implements WidgetInterface
 {
     public function render($row, $field_name)
