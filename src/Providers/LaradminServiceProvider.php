@@ -42,7 +42,7 @@ class LaradminServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../config/laradmin.php' => config_path('laradmin.php'),
             __DIR__ . '/../../resources/views' => base_path('resources/views/vendor/laradmin'),
-            __DIR__ . '/../../resources/assets' => base_path('public/vendor/laradmin'),
+            __DIR__ . '/../../resources/assets' => public_path('vendor/laradmin'),
         ]);
     }
 }
