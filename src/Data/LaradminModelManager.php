@@ -57,4 +57,18 @@ class LaradminModelManager
 
         return $rows;
     }
+
+    /**
+     * Get a single row using an id.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function find($id)
+    {
+        $model = $this->getModel();
+        $row = $model::find($id);
+
+        return $row;
+    }
 }

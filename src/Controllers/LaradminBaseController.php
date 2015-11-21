@@ -121,7 +121,12 @@ class LaradminBaseController extends Controller
 
     public function edit($id)
     {
-        return 'edit ' . $id;
+        $model = $this->getModel();
+        $row = $this->getModelManager()->find($id);
+        $fields = $this->getModelFields();
+        $form_action = route(implode('.', [strtolower($this->getModel()), 'update']), ['id' => $id]);
+
+        return view('laradmin::edit', compact(['model', 'row', 'fields', 'form_action']));
     }
 
     public function show($id)
