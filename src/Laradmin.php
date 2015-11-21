@@ -18,13 +18,13 @@ class Laradmin
 
     /**
      * Safely checks if a configuration parameter exists and
-     * throw an exception eventually.
+     * get it. Throws an exception if parameter is not found.
      *
      * @param string $config_param
      * @return array|string
      * @throws ConfigurationException
      */
-    private static function checkSafeConfig($config_param)
+    private static function getSafeConfig($config_param)
     {
         $config_value = config($config_param);
 
@@ -44,18 +44,32 @@ class Laradmin
      */
     public static function getModels()
     {
-        return self::checkSafeConfig(self::LARADMIN_MODELS);
+        return self::getSafeConfig(self::LARADMIN_MODELS);
     }
 
     /**
      * Get the models namespace.
      *
-     * @return array|string
+     * @return string
      * @throws ConfigurationException
      */
     public static function getModelsNamespace()
     {
-        return self::checkSafeConfig(self::LARADMIN_MODELS_NAMESPACE);
+        return self::getSafeConfig(self::LARADMIN_MODELS_NAMESPACE);
+    }
+
+    /**
+     * Return the full class path (with namespace) for a model.
+     *
+     * @param string $model
+     *   The model name, without the namespace.
+     *
+     * @return string
+     *   The model, with namespace prepended.
+     */
+    public static function getModelFullClassPath($model)
+    {
+        return implode('\\', [self::getSafeConfig(self::LARADMIN_MODELS_NAMESPACE), $model]);
     }
 
     /**
@@ -66,6 +80,6 @@ class Laradmin
      */
     public static function getAdminClassesNamespace()
     {
-        return self::checkSafeConfig(self::LARADMIN_ADMIN_CLASSES_NAMESPACE);
+        return self::getSafeConfig(self::LARADMIN_ADMIN_CLASSES_NAMESPACE);
     }
 }

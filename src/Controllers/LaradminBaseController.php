@@ -5,6 +5,7 @@ namespace Laradmin\Controllers;
 use Illuminate\Routing\Controller;
 
 use Laradmin\Laradmin;
+use Laradmin\Data\LaradminModelManager;
 
 /**
  * Class LaradminBaseController
@@ -19,19 +20,30 @@ class LaradminBaseController extends Controller
     private $model;
 
     /**
+     * @var LaradminModelManager
+     */
+    private $modelManager;
+
+    /**
      * @var string
      */
     private $modelClassPath;
+    /**
+     * @var
+     */
+    private $model_manager;
 
     /**
      * LaradminBaseController constructor.
      *
-     * @param $model
+     * @param string $model
+     * @param LaradminModelManager $model_manager
      */
-    public function __construct($model)
+    public function __construct($model, $model_manager)
     {
-        $this->model = $model;
+        $this->model = $model; // Model name is injected using Laravel IoC container.
         $this->modelClassPath = implode('\\', [Laradmin::getModelsNamespace(), $model]);
+        $this->modelManager = $model_manager;
     }
 
     /**
@@ -56,7 +68,10 @@ class LaradminBaseController extends Controller
 
     public function index()
     {
-        return view('laradmin::index');
+        $model = $this->getModel();
+        $rows = $this->modelManager->all();
+
+        return view('laradmin::index', compact(['model', 'rows']));
     }
 
     public function edit($id)
