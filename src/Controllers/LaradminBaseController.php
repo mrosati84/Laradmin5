@@ -31,10 +31,6 @@ class LaradminBaseController extends Controller
      * @var string
      */
     private $modelClassPath;
-    /**
-     * @var
-     */
-    private $model_manager;
 
     /**
      * LaradminBaseController constructor.
@@ -47,6 +43,22 @@ class LaradminBaseController extends Controller
         $this->model = $model; // Model name is injected using Laravel IoC container.
         $this->modelClassPath = implode('\\', [Laradmin::getModelsNamespace(), $model]);
         $this->modelManager = $model_manager;
+    }
+
+    /**
+     * @return LaradminModelManager
+     */
+    public function getModelManager()
+    {
+        return $this->modelManager;
+    }
+
+    /**
+     * @param LaradminModelManager $modelManager
+     */
+    public function setModelManager($modelManager)
+    {
+        $this->modelManager = $modelManager;
     }
 
     /**
@@ -100,7 +112,7 @@ class LaradminBaseController extends Controller
     public function index()
     {
         $model = $this->getModel();
-        $rows = $this->modelManager->all();
+        $rows = $this->getModelManager()->all();
         $fields = $this->getModelFields();
         $actions = $this->getModelDefaultActions();
 
