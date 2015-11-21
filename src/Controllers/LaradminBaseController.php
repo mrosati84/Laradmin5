@@ -6,6 +6,9 @@ use Illuminate\Routing\Controller;
 
 use Laradmin\Laradmin;
 use Laradmin\Data\LaradminModelManager;
+use Laradmin\Actions\ShowAction;
+use Laradmin\Actions\EditAction;
+use Laradmin\Actions\DestroyAction;
 
 /**
  * Class LaradminBaseController
@@ -79,13 +82,29 @@ class LaradminBaseController extends Controller
         return [];
     }
 
+    /**
+     * Get the default actions for this model.
+     * @return array
+     */
+    public function getModelDefaultActions()
+    {
+        $model = $this->getModel();
+
+        return [
+            new ShowAction($model),
+            new EditAction($model),
+            new DestroyAction($model),
+        ];
+    }
+
     public function index()
     {
         $model = $this->getModel();
         $rows = $this->modelManager->all();
         $fields = $this->getModelFields();
+        $actions = $this->getModelDefaultActions();
 
-        return view('laradmin::index', compact(['model', 'rows', 'fields']));
+        return view('laradmin::index', compact(['model', 'rows', 'fields', 'actions']));
     }
 
     public function edit($id)
