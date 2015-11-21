@@ -66,12 +66,26 @@ class LaradminBaseController extends Controller
         return $this->modelClassPath;
     }
 
+    /**
+     * Return a list of fields to render.
+     *
+     * @return array
+     */
+    public function getModelFields()
+    {
+        // By default, this method returns an empty array of fields.
+        // Fill the fields you want to render in your admin classes,
+        // by overriding this method.
+        return [];
+    }
+
     public function index()
     {
         $model = $this->getModel();
         $rows = $this->modelManager->all();
+        $fields = $this->getModelFields();
 
-        return view('laradmin::index', compact(['model', 'rows']));
+        return view('laradmin::index', compact(['model', 'rows', 'fields']));
     }
 
     public function edit($id)

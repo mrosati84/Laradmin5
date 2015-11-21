@@ -2,9 +2,22 @@
 
 @section('content')
     <h1>List entries for {{ $model }}</h1>
-    <ul>
+    <table class="table">
+        <thead>
+            <tr>
+                @foreach($fields as $field)
+                    <th>{{ $field }}</th>
+                @endforeach
+            </tr>
+        </thead>
+        <tbody>
         @foreach($rows as $row)
-            <li>{{ $row }}</li>
+            <tr>
+                @foreach($fields as $field)
+                    <td>{{ $row->$field }}</td>
+                @endforeach
+            </tr>
         @endforeach
-    </ul>
+        </tbody>
+    </table>
 @endsection
