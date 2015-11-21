@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Request;
  */
 class LaradminModelManager
 {
+    const SORT_BY = 'sort_by';
+
     /**
      * @var string
      *   The full model class path, with namespace.
@@ -48,7 +50,7 @@ class LaradminModelManager
         $model = $this->getModel();
         $rows = $model::all();
 
-        if ($sort_by = Request::input('sort_by'))
+        if ($sort_by = Request::input(self::SORT_BY))
         {
             return $rows->sortBy($sort_by);
         }
