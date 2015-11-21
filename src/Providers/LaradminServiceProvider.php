@@ -23,13 +23,11 @@ class LaradminServiceProvider extends ServiceProvider
         $config = config(Laradmin::LARADMIN_CONFIG); // Get Laradmin configuration.
         $appRouter = $app[Laradmin::ILLUMINATE_ROUTING_ROUTER];
 
-        if (!$config)
+        if ($config)
         {
-            throw new ConfigurationException('Laradmin configuration file not found');
+            // Register routes.
+            (new Routing($app, $appRouter))->registerRoutes();
         }
-
-        // Register routes.
-        (new Routing($app, $appRouter))->registerRoutes();
     }
 
     /**
@@ -37,7 +35,13 @@ class LaradminServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Register package views
+        // Register package views directories.
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'laradmin');
+
+        // Register config files and directories published by the package.
+        $this->publishes([
+            __DIR__ . '/../../config/laradmin.php' => config_path('laradmin.php'),
+            __DIR__ . '/../../resources/views' => base_path('resources/views/vendor/laradmin'),
+        ]);
     }
 }
