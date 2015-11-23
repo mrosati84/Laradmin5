@@ -5,7 +5,7 @@
 
     <form method="post" action="{{ $form_action }}">
         @foreach($fields as $field_name => $field_properties)
-            {!! $field_properties['input']->render($row, $field_name, $field_properties['label']) !!}
+            {!! $field_properties->getInput()->render($row, $field_name, $field_properties->getLabel()) !!}
         @endforeach
 
         <input type="hidden" name="_token" value="{{ csrf_token() }}">

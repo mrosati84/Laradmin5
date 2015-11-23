@@ -3,7 +3,10 @@
 namespace Laradmin\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Redirect;
 
+use Illuminate\View\View;
 use Laradmin\Laradmin;
 use Laradmin\Data\LaradminModelManager;
 use Laradmin\Actions\ShowAction;
@@ -109,6 +112,9 @@ class LaradminBaseController extends Controller
         ];
     }
 
+    /**
+     * @return View
+     */
     public function index()
     {
         $model = $this->getModel();
@@ -119,36 +125,69 @@ class LaradminBaseController extends Controller
         return view('laradmin::index', compact(['model', 'rows', 'fields', 'actions']));
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|View
+     */
     public function edit($id)
     {
         $model = $this->getModel();
         $row = $this->getModelManager()->find($id);
         $fields = $this->getModelFields();
-        $form_action = route(implode('.', [strtolower($this->getModel()), 'update']), ['id' => $id]);
+        $form_action = Laradmin::generateRouteForModel($model, 'update', ['id' => $id]);
 
         return view('laradmin::edit', compact(['model', 'row', 'fields', 'form_action']));
     }
 
+    /**
+     * @param $id
+     * @return string
+     */
     public function show($id)
     {
         return 'show ' . $id;
     }
 
+    /**
+     * @return string
+     */
     public function store()
     {
         return 'store';
     }
 
+    /**
+     * @return string
+     */
     public function create()
     {
         return 'create';
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function update($id)
     {
-        return 'update ' . $id;
+        $model = $this->getModel();
+        $row = $this->getModelManager()->find($id);
+        $fields = $this->getModelFields();
+
+        foreach ($fields as $field_name => $field_properties)
+        {
+            $row->$field_name = Request::input($field_name);
+        }
+
+        $row->save();
+
+        return Redirect::to(Laradmin::generateRouteForModel($model, 'index'));
     }
 
+    /**
+     * @param $id
+     * @return string
+     */
     public function destroy($id)
     {
         return 'destroy ' . $id;

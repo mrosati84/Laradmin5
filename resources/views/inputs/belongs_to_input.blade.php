@@ -1,4 +1,8 @@
 <div class="form-group">
     <label for="{{ $field_name }}">{{ $label }}</label>
-    <input name="{{ $field_name }}" id="{{ $field_name }}" class="form-control" type="text" value="{{ $row->$field_name }}">
+    <select name="{{ $field_name }}" id="{{ $field_name }}">
+        @foreach($related_rows as $related_label => $related_value)
+            <option value="{{ $related_value }}">{{ $related_label }}</option>
+        @endforeach
+    </select>
 </div>

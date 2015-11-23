@@ -1,3 +1,3 @@
-<a href="{{ route(implode('.', [$model, 'show']), ['id' => $id]) }}">
+<a href="{{ $link_to_related }}">
     {{ $value }}
 </a>

@@ -82,4 +82,18 @@ class Laradmin
     {
         return self::getSafeConfig(self::LARADMIN_ADMIN_CLASSES_NAMESPACE);
     }
+
+    /**
+     * Generate a route for a model.
+     *
+     * @param string $model
+     * @param string $action
+     * @param array $arguments
+     *
+     * @return string
+     */
+    public static function generateRouteForModel($model, $action, $arguments=[])
+    {
+        return route(implode('.', [strtolower($model), $action]), $arguments);
+    }
 }

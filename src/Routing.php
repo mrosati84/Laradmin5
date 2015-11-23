@@ -39,7 +39,7 @@ class Routing
      */
     public function registerRoutes()
     {
-        foreach (Laradmin::getModels() as $model => $props)
+        foreach (Laradmin::getModels() as $model)
         {
             $model_lowercased_name = strtolower($model);
             $admin_classpath = implode('\\', [Laradmin::getAdminClassesNamespace(), $model]);

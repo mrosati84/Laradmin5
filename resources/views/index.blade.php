@@ -9,7 +9,7 @@
                 @foreach($fields as $field_name => $field_properties)
                     <th>
                         <a href="?sort_by={{ $field_name }}">
-                            {{ $field_properties['label'] }}
+                            {{ $field_properties->getLabel() }}
                         </a>
                     </th>
                 @endforeach
@@ -21,7 +21,7 @@
             <tr>
                 @foreach($fields as $field_name => $field_properties)
                     <td>
-                        {!! $field_properties['widget']->render($row, $field_name) !!}
+                        {!! $field_properties->getWidget()->render($row, $field_name) !!}
                     </td>
                 @endforeach
 
