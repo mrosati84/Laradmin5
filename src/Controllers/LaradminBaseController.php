@@ -20,6 +20,7 @@ use Laradmin\Actions\DestroyAction;
 class LaradminBaseController extends Controller
 {
     const COLUMN_ID = 'id';
+
     /**
      * @var string
      *   Holds a string reference to the current Eloquent model.
@@ -181,7 +182,7 @@ class LaradminBaseController extends Controller
         {
             $new_column_value = Request::input($attribute_name);
 
-            // Ignore id update
+            // Ignore id update.
             // TODO: needs refactoring
             if ($attribute_name !== self::COLUMN_ID)
             {
