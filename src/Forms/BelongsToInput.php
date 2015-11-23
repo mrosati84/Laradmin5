@@ -69,8 +69,9 @@ class BelongsToInput implements InputInterface
         $parent_primary_key_column = $this->getParentPrimaryKeyColumn();
         $related_rows = $model::lists($parent_primary_key_column, $this->getPrintableColumn());
         $field_name = implode('_', [$field_name, $parent_primary_key_column]);
+        $actual_value = $row->$field_name;
 
         return view('laradmin::inputs/belongs_to_input',
-            compact('field_name', 'label', 'related_rows', 'parent_primary_key_column'));
+            compact('field_name', 'label', 'related_rows', 'actual_value', 'parent_primary_key_column'));
     }
 }

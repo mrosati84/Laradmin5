@@ -19,6 +19,7 @@ use Laradmin\Actions\DestroyAction;
  */
 class LaradminBaseController extends Controller
 {
+    const COLUMN_ID = 'id';
     /**
      * @var string
      *   Holds a string reference to the current Eloquent model.
@@ -134,7 +135,7 @@ class LaradminBaseController extends Controller
         $model = $this->getModel();
         $row = $this->getModelManager()->find($id);
         $fields = $this->getModelFields();
-        $form_action = Laradmin::generateRouteForModel($model, 'update', ['id' => $id]);
+        $form_action = Laradmin::generateRouteForModel($model, 'update', [self::COLUMN_ID => $id]);
 
         return view('laradmin::edit', compact(['model', 'row', 'fields', 'form_action']));
     }
@@ -174,9 +175,18 @@ class LaradminBaseController extends Controller
         $row = $this->getModelManager()->find($id);
         $fields = $this->getModelFields();
 
-        foreach ($fields as $field_name => $field_properties)
+        // FIXME: needs refactoring because this does not support
+        // relationships.
+        foreach ($row->getAttributes() as $attribute_name => $attribute_value)
         {
-            $row->$field_name = Request::input($field_name);
+            $new_column_value = Request::input($attribute_name);
+
+            // Ignore id update
+            // TODO: needs refactoring
+            if ($attribute_name !== self::COLUMN_ID)
+            {
+                $row->$attribute_name = $new_column_value;
+            }
         }
 
         $row->save();
