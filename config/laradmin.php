@@ -10,8 +10,9 @@ return [
 
     // List all the Eloquent models to handle.
     'models' => [
-        'User' => [],
-        'Book' => [],
+        'User',
+        'Book',
+        'Author',
     ]
 
 ];
