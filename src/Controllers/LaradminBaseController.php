@@ -147,6 +147,7 @@ class LaradminBaseController extends Controller
      */
     public function show($id)
     {
+        // TODO: add method code for show method.
         return 'show ' . $id;
     }
 
@@ -155,6 +156,7 @@ class LaradminBaseController extends Controller
      */
     public function store()
     {
+        // TODO: add method code for store method.
         return 'store';
     }
 
@@ -163,6 +165,7 @@ class LaradminBaseController extends Controller
      */
     public function create()
     {
+        // TODO: add method code for create method.
         return 'create';
     }
 
@@ -176,14 +179,14 @@ class LaradminBaseController extends Controller
         $row = $this->getModelManager()->find($id);
         $fields = $this->getModelFields();
 
-        // FIXME: needs refactoring because this does not support
+        // FIXME: refactor to support relationships.
         // relationships.
         foreach ($row->getAttributes() as $attribute_name => $attribute_value)
         {
             $new_column_value = Request::input($attribute_name);
 
             // Ignore id update.
-            // TODO: needs refactoring
+            // TODO: id column update needs refactoring.
             if ($attribute_name !== self::COLUMN_ID)
             {
                 $row->$attribute_name = $new_column_value;
