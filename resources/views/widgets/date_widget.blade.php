@@ -1,3 +1,3 @@
-<span>
+<time>
     {{ $date }}
-</span>
+</time>
